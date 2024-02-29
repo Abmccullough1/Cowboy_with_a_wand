@@ -1,0 +1,118 @@
+[gd_scene load_steps=16 format=3 uid="uid://cpllcsino2w52"]
+
+[ext_resource type="Script" path="res://scenes/bad_guy2.gd" id="1_1o8cr"]
+[ext_resource type="Texture2D" uid="uid://dsjd1lh7gk5w5" path="res://TombleWeed-Sheet.png" id="2_l144m"]
+[ext_resource type="AudioStream" uid="uid://bypt1rvx2jjbh" path="res://VictoryScreeech.mp3" id="3_mnp8e"]
+[ext_resource type="AudioStream" uid="uid://sgrlcot1jrqn" path="res://TumbleBoss.mp3" id="4_fjpwl"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_345uv"]
+radius = 55.0091
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ysxr1"]
+atlas = ExtResource("2_l144m")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_76w5b"]
+atlas = ExtResource("2_l144m")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w2mrh"]
+atlas = ExtResource("2_l144m")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mgrcw"]
+atlas = ExtResource("2_l144m")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cfqtc"]
+atlas = ExtResource("2_l144m")
+region = Rect2(512, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lu1ap"]
+atlas = ExtResource("2_l144m")
+region = Rect2(640, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_buyvv"]
+atlas = ExtResource("2_l144m")
+region = Rect2(768, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2x86b"]
+atlas = ExtResource("2_l144m")
+region = Rect2(896, 0, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_yphbm"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ysxr1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_76w5b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w2mrh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mgrcw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cfqtc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lu1ap")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_buyvv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2x86b")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ii0m7"]
+radius = 355.013
+
+[node name="bad_guy" type="CharacterBody2D"]
+script = ExtResource("1_1o8cr")
+
+[node name="tumbletweed" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="tumbletweed"]
+shape = SubResource("CircleShape2D_345uv")
+
+[node name="Bosshealth" type="ProgressBar" parent="."]
+offset_left = -112.0
+offset_top = -65.0
+offset_right = 112.0
+offset_bottom = -38.0
+max_value = 500.0
+show_percentage = false
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 12.894
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_yphbm")
+animation = &"Idle"
+frame_progress = 0.72491
+
+[node name="victory" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_mnp8e")
+
+[node name="songtimer" type="Timer" parent="."]
+
+[node name="Boss_music" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_fjpwl")
+
+[node name="bossmusic" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="bossmusic"]
+shape = SubResource("CircleShape2D_ii0m7")
+
+[connection signal="area_entered" from="tumbletweed" to="." method="_on_tumbletweed_area_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="area_entered" from="bossmusic" to="." method="_on_bossmusic_area_entered"]
+[connection signal="area_exited" from="bossmusic" to="." method="_on_bossmusic_area_exited"]
