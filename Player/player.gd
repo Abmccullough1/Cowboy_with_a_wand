@@ -1,5 +1,5 @@
 extends CharacterBody2D
-var health= 100
+var health= 10
 const SPEED = 300
 var invincible = false
 const JUMP_VELOCITY = -650.0
